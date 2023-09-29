@@ -1,0 +1,31 @@
+create table Book(bookid int primary key,title varchar(20),author varchar(10),publisher varchar2(10),publicationyear int,isbn int,genre int,availability bool);
+ 
+create table borrowers(borrowerid int primary key,address varchar(10),phonenumber int,email varchar(10));
+
+create table loans(loanid int primary key,bookid int,borrowerid int,dateborrowed date,duedate date,datareturned date);
+
+create table reservations(reservationid int primary key,bookid int,borrowerid int,datereserved date,dateneeded date,status varchar(10));
+
+insert into book values(100,'sql','ramu','gouri',1990,10,23,1);
+insert into book values(101,'python','siri','candy',1997,11,24,0);
+insert into book values(102,'oops','sita','hari',2000,13,25,1);
+select * from book;
+
+select * from book where availability=1;
+insert into borrowers values(11,'gudivada',9848132361,'sqlpanda@gmail.com');
+insert into borrowers values(12,'gudlavalleru',9848132345,'ram@gmail.com');
+insert into borrowers values(13,'hyderabad',7038132361,'pavani@gmail.com');
+
+select * from borrowers;
+insert into loans values(1,100,11,'12-jul-2023','30-jul-2023','29-jul-2023');
+insert into loans values(2,101,12,'13-jul-2023','30-jul-2023','24-jul-2023');
+insert into loans values(3,100,11,'9-jul-2023','20-jul-2023','10-jul-2023');
+select * from loans;
+
+insert into reservations values(21,100,11,'05-jun-2022','06-sep-2022','active');
+insert into reservations values(22,101,12,'25-jun-2022','26-sep-2022','cancelled');
+insert into reservations values(23,100,13,'12-jun-2022','24-sep-2022','expired');
+select * from reservations;
+select book.title,book.author,reservations.datereserved,reservations.dateneeded from book inner join reservations on book.bookid=reservations.bookid;
+
+select book.title,book.author,loans.dateborrowed,loans.duedate from book inner join loans on book.bookid=loans.bookid inner join borrowers on loans.borrowerid=borrowers.borrowerid;
